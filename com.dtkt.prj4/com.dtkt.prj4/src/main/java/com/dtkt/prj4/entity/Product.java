@@ -2,6 +2,8 @@ package com.dtkt.prj4.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "product")
 public class Product {
@@ -34,12 +36,26 @@ public class Product {
     @Column(name = "is_featured")
     private Boolean isFeatured;
 
+    // =========================
     // CATEGORY
+    // =========================
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    // ===== GETTER SETTER =====
+    // =========================
+    // PRODUCT IMAGES
+    // =========================
+    @OneToMany(
+            mappedBy = "product",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
+    )
+    private List<ProductImage> images;
+
+    // =========================
+    // GETTER SETTER
+    // =========================
 
     public Long getId() {
         return id;
@@ -135,5 +151,13 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public List<ProductImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<ProductImage> images) {
+        this.images = images;
     }
 }

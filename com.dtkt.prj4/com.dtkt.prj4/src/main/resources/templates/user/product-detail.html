@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title th:text="${product.name}">
+        Product Detail
+    </title>
+
+    <link rel="stylesheet"
+          href="/css/user/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="menu-left">
+
+        <a href="/">HOME</a>
+
+        <a href="#">Bộ Sưu Tập</a>
+
+    </div>
+
+    <div class="logo">
+        DTKT
+    </div>
+
+    <div class="menu-right">
+
+        <a href="/user/login">
+            Đăng Nhập
+        </a>
+
+        <a href="/cart">
+            Giỏ Hàng
+        </a>
+
+    </div>
+
+</header>
+
+
+<section class="product-detail">
+
+    <div class="product-image">
+        <img th:if="${product.images != null and !product.images.isEmpty()}"
+             th:src="${product.images[0].imageUrl}"
+             alt="">
+    </div>
+
+
+    <div class="product-info">
+
+        <h1 th:text="${product.name}">
+            Product Name
+        </h1>
+
+        <div class="price">
+
+            <span th:text="${product.price}">
+            </span> VNĐ
+
+        </div>
+
+        <p th:text="${product.description}">
+            Product Description
+        </p>
+
+        <div class="product-meta">
+
+            <p>
+                Size:
+                <span th:text="${product.size}">
+                </span>
+            </p>
+
+            <p>
+                Color:
+                <span th:text="${product.color}">
+                </span>
+            </p>
+
+            <p>
+                Quantity:
+                <span th:text="${product.quantity}">
+                </span>
+            </p>
+
+        </div>
+
+
+        <!-- SIZE SELECT -->
+        <div class="size-wrapper">
+
+            <h3>CHỌN SIZE</h3>
+
+            <div class="size-buttons">
+
+                <button type="button"
+                        class="size-btn active">
+                    S
+                </button>
+
+                <button type="button"
+                        class="size-btn">
+                    M
+                </button>
+
+                <button type="button"
+                        class="size-btn">
+                    L
+                </button>
+
+                <button type="button"
+                        class="size-btn">
+                    XL
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADD CART -->
+        <form th:action="@{/cart/add/{id}(id=${product.id})}"
+              method="post">
+
+            <input type="hidden"
+                   name="size"
+                   id="selectedSize"
+                   value="S">
+
+            <button type="submit"
+                    class="add-cart-btn">
+
+                ADD TO CART
+
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<script>
+
+    const sizeButtons =
+        document.querySelectorAll(".size-btn");
+
+    const hiddenSizeInput =
+        document.getElementById("selectedSize");
+
+    sizeButtons.forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            sizeButtons.forEach(btn => {
+                btn.classList.remove("active");
+            });
+
+            button.classList.add("active");
+
+            hiddenSizeInput.value =
+                button.innerText;
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

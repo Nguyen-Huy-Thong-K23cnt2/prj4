@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Giỏ Hàng</title>
+
+    <link rel="stylesheet"
+          href="/css/user/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+
+    <div class="menu-left">
+
+        <a href="/">HOME</a>
+
+        <a href="#">Bộ Sưu Tập</a>
+
+    </div>
+
+    <div class="logo">
+        DTKT
+    </div>
+
+    <div class="menu-right">
+
+        <a href="/user/login">
+            Đăng Nhập
+        </a>
+
+        <a href="/cart">
+            Giỏ Hàng
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- CART PAGE -->
+<section class="cart-page">
+
+    <h1>Giỏ hàng của bạn</h1>
+
+    <table class="cart-table">
+
+        <thead>
+
+        <tr>
+
+            <th>Sản Phẩm</th>
+
+            <th>Size</th>
+
+            <th>Đơn Giá</th>
+
+            <th>Số Lượng</th>
+
+            <th>Total</th>
+
+            <th>Action</th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        <tr th:each="item : ${cart}">
+
+            <!-- PRODUCT -->
+            <td>
+
+                <div class="cart-product">
+
+                    <img src="https://picsum.photos/300/400"
+                         alt="">
+
+                    <span th:text="${item.name}">
+                    </span>
+
+                </div>
+
+            </td>
+
+
+            <!-- SIZE -->
+            <td>
+
+                <form th:action="@{/cart/change-size/{id}(id=${item.productId})}"
+                      method="post">
+
+                    <select name="size"
+                            onchange="this.form.submit()">
+
+                        <option value="S"
+                                th:selected="${item.size == 'S'}">
+                            S
+                        </option>
+
+                        <option value="M"
+                                th:selected="${item.size == 'M'}">
+                            M
+                        </option>
+
+                        <option value="L"
+                                th:selected="${item.size == 'L'}">
+                            L
+                        </option>
+
+                        <option value="XL"
+                                th:selected="${item.size == 'XL'}">
+                            XL
+                        </option>
+
+                    </select>
+
+                </form>
+
+            </td>
+
+
+            <!-- PRICE -->
+            <td>
+
+                <span th:text="${item.price}">
+                </span> VNĐ
+
+            </td>
+
+
+            <!-- QUANTITY -->
+            <td>
+
+                <div class="quantity-box">
+
+                    <a th:href="@{/cart/decrease/{id}(id=${item.productId})}">
+                        -
+                    </a>
+
+                    <span th:text="${item.quantity}">
+                    </span>
+
+                    <a th:href="@{/cart/increase/{id}(id=${item.productId})}">
+                        +
+                    </a>
+
+                </div>
+
+            </td>
+
+
+            <!-- TOTAL -->
+            <td>
+
+                <span th:text="${item.price * item.quantity}">
+                </span> VNĐ
+
+            </td>
+
+
+            <!-- REMOVE -->
+            <td>
+
+                <a class="remove-btn"
+                   th:href="@{/cart/remove/{id}(id=${item.productId})}">
+
+                    REMOVE
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+
+    <!-- EMPTY CART -->
+    <div class="empty-cart"
+         th:if="${#lists.isEmpty(cart)}">
+
+        Giỏ hàng đang trống.
+
+    </div>
+
+
+    <!-- TOTAL -->
+    <div class="cart-total"
+         th:if="${!#lists.isEmpty(cart)}">
+
+        TOTAL:
+        <span th:text="${total}">
+        </span> VNĐ
+
+    </div>
+
+
+    <!-- CHECKOUT BUTTON -->
+    <div class="checkout-box"
+         th:if="${!#lists.isEmpty(cart)}">
+
+        <a href="#"
+           class="checkout-btn">
+
+            THANH TOÁN
+
+        </a>
+
+    </div>
+
+</section>
+
+</body>
+</html>

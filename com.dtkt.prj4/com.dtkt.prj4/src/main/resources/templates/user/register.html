@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Đăng Ký</title>
+
+    <link rel="stylesheet"
+          href="/css/user/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<section class="auth-page">
+
+    <div class="auth-box register-box">
+
+        <h1>Đăng ký</h1>
+
+        <form th:action="@{/register}"
+              method="post"
+              th:object="${registerRequest}">
+
+            <input type="text"
+                   th:field="*{username}"
+                   placeholder="Tên đăng nhập"
+                   required>
+
+            <input type="password"
+                   th:field="*{password}"
+                   placeholder="Mật Khẩu"
+                   required>
+
+            <input type="email"
+                   th:field="*{email}"
+                   placeholder="Email"
+                   required>
+
+            <input type="text"
+                   th:field="*{fullName}"
+                   placeholder="Họ và tên">
+
+            <input type="text"
+                   th:field="*{phone}"
+                   placeholder="Số điện thoại">
+
+            <input type="text"
+                   th:field="*{address}"
+                   placeholder="Địa chỉ">
+
+            <button type="submit">
+                ĐĂNG KÝ
+            </button>
+
+        </form>
+
+        <div class="auth-link">
+
+            Đã có tài khoản?
+
+            <a href="/login">
+                Đăng nhập
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+</body>
+</html>

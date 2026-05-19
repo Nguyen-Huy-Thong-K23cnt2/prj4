@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+    <title>DTKT Shop</title>
+    <link rel="stylesheet"
+          th:href="@{/css/user/style.css}">
+    <!-- FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+</head>
+
+<body>
+<!-- TOP BAR -->
+<div class="top-bar">
+    <div class="top-left">
+        Hotline: 0981.xxx.xxx
+    </div>
+    <div class="top-center">
+        FREESHIP TOÀN QUỐC
+    </div>
+    <div class="top-right">
+        Hệ thống cửa hàng
+    </div>
+</div>
+
+
+<!-- HEADER -->
+<header class="header">
+    <div class="menu-left">
+        <a href="#">MENU</a>
+        <a href="#">Mới </a>
+        <a href="#">Bộ Sưu Tập</a>
+    </div>
+
+    <div class="logo">
+        DTKT
+    </div>
+
+    <div class="menu-right">
+        <a href="/login">
+            Đăng nhập
+        </a>
+        <a href="/cart">
+            Giỏ hàng
+        </a>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+        <h1>DTKT</h1>
+        <h2>BLACK LABEL</h2>
+    </div>
+</section>
+
+<!-- PRODUCT SECTION -->
+<section class="product-section">
+    <div class="section-title">
+        Sản Phẩm Mới
+    </div>
+    <div class="product-grid">
+        <!-- PRODUCT -->
+        <div class="product-card"
+             th:each="product : ${products}">
+            <a th:href="@{/product/{id}(id=${product.id})}">
+                <div class="product-image">
+                    <img class="main-img"
+                         th:if="${product.images != null and !product.images.isEmpty()}"
+                         th:src="${product.images[0].imageUrl}"
+                         alt="product">
+                </div>
+                <div class="product-info">
+                    <h3 th:text="${product.name}">
+                        Product Name
+                    </h3>
+                    <p th:text="${product.price} + ' VNĐ'">
+                        399000 VNĐ
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- CATEGORY SECTION -->
+<section class="category-section">
+    <!-- CATEGORY -->
+    <div class="category-box">
+        <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200"
+             alt="category">
+        <div class="category-overlay">
+            ÁO
+        </div>
+    </div>
+
+    <!-- CATEGORY -->
+    <div class="category-box">
+        <img src="https://images.unsplash.com/photo-1506629905607-d9c297d4b1d1?q=80&w=1200"
+             alt="category">
+        <div class="category-overlay">
+            QUẦN
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-column">
+        <h3>DTKT LABEL</h3>
+        <p>
+            Local brand phong cách darkwear / streetwear.
+        </p>
+    </div>
+
+    <div class="footer-column">
+        <h3>HỖ TRỢ</h3>
+        <p>Chính sách giao hàng</p>
+        <p>Chính sách đổi trả</p>
+        <p>Liên hệ</p>
+    </div>
+
+    <div class="footer-column">
+        <h3>Theo dõi chúng tôi</h3>
+        <p>Facebook</p>
+        <p>Instagram</p>
+        <p>TikTok</p>
+    </div>
+</footer>
+
+</body>
+</html>

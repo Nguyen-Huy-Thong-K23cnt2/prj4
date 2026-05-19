@@ -1,91 +1,115 @@
 package com.dtkt.prj4.service;
 
-import com.dtkt.prj4.dto.DTKTLoginRequestDTO;
-import com.dtkt.prj4.dto.DTKTLoginResponseDTO;
 import com.dtkt.prj4.dto.DTKTRegisterRequestDTO;
 import com.dtkt.prj4.entity.Role;
 import com.dtkt.prj4.entity.Users;
 import com.dtkt.prj4.repository.DTKTRoleRepository;
-import com.dtkt.prj4.repository.DTKTUsersRepository;
-import com.dtkt.prj4.security.JwtService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import com.dtkt.prj4.repository.DTKTUserRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class DTKTAuthService {
 
-    private final DTKTUsersRepository DTKTUsersRepository;
-    private final DTKTRoleRepository DTKTRoleRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
+    private final DTKTUserRepository userRepository;
 
-    public DTKTAuthService(DTKTUsersRepository DTKTUsersRepository,
-                           DTKTRoleRepository DTKTRoleRepository,
-                           BCryptPasswordEncoder passwordEncoder,
-                           JwtService jwtService) {
+    private final DTKTRoleRepository roleRepository;
 
-        this.DTKTUsersRepository = DTKTUsersRepository;
-        this.DTKTRoleRepository = DTKTRoleRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.jwtService = jwtService;
+    public DTKTAuthService(
+            DTKTUserRepository userRepository,
+            DTKTRoleRepository roleRepository
+    ) {
+
+        this.userRepository = userRepository;
+
+        this.roleRepository = roleRepository;
     }
 
+    // =========================
     // REGISTER
-    public String register(DTKTRegisterRequestDTO request) {
+    // =========================
+    public String register(
+            DTKTRegisterRequestDTO request
+    ) {
+
+        Optional<Users> userExist =
+                userRepository.findByUsername(
+                        request.getUsername()
+                );
+
+        if (userExist.isPresent()) {
+
+            return "Username already exists";
+        }
 
         Users user = new Users();
 
-        user.setUsername(request.getUsername());
-        user.setEmail(request.getEmail());
-
-        // mã hóa password
-        user.setPassword(
-                passwordEncoder.encode(request.getPassword())
+        user.setUsername(
+                request.getUsername()
         );
 
-        // mặc định role USER
-        Role role = DTKTRoleRepository.findById(2L)
-                .orElseThrow();
+        user.setPassword(
+                request.getPassword()
+        );
+
+        user.setEmail(
+                request.getEmail()
+        );
+
+        user.setFullName(
+                request.getFullName()
+        );
+
+        user.setPhone(
+                request.getPhone()
+        );
+
+        user.setAddress(
+                request.getAddress()
+        );
+
+        user.setIsActive(true);
+
+        user.setCreatedAt(
+                LocalDateTime.now()
+        );
+
+        Role role =
+                roleRepository.findByName("USER")
+                        .orElseThrow(() ->
+                                new RuntimeException("Role not found"));
 
         user.setRole(role);
 
-        DTKTUsersRepository.save(user);
+        userRepository.save(user);
 
         return "Register success";
     }
 
+    // =========================
     // LOGIN
-    public DTKTLoginResponseDTO login(DTKTLoginRequestDTO request) {
+    // =========================
+    public Users login(
+            String username,
+            String password
+    ) {
 
-        Users user = DTKTUsersRepository.findByUsername(
-                        request.getUsername()
-                )
-                .orElseThrow(() ->
-                        new RuntimeException("User not found")
-                );
+        Users user =
+                userRepository.findByUsername(username)
+                        .orElse(null);
 
-        boolean checkPassword = passwordEncoder.matches(
-                request.getPassword(),
-                user.getPassword()
-        );
+        if (user == null) {
 
-        if (!checkPassword) {
-            throw new RuntimeException("Wrong password");
+            return null;
         }
 
-        // tạo JWT token
-        String token = jwtService.generateToken(
-                user.getUsername()
-        );
+        if (!user.getPassword().equals(password)) {
 
-        DTKTLoginResponseDTO response = new DTKTLoginResponseDTO();
+            return null;
+        }
 
-        response.setId(user.getId());
-        response.setUsername(user.getUsername());
-        response.setRole(user.getRole().getName());
-        response.setMessage("Login success");
-        response.setToken(token);
-
-        return response;
+        return user;
     }
 }
