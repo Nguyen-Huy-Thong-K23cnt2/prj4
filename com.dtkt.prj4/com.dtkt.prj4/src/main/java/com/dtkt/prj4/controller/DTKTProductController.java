@@ -68,15 +68,14 @@ public class DTKTProductController {
     public List<Product> searchProducts(
             @RequestParam String keyword
     ) {
-
         return productService.searchProducts(keyword);
     }
+
     // FILTER CATEGORY
     @GetMapping("/category/{categoryId}")
     public List<Product> getProductsByCategory(
             @PathVariable Long categoryId
     ) {
-
         return productService
                 .getProductsByCategory(categoryId);
     }

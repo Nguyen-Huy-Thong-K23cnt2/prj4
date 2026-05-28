@@ -84,7 +84,7 @@
 
             <div class="stat-card">
 
-                <h2>120</h2>
+                <h2 th:text="${totalProducts}"></h2>
 
                 <p>Total Products</p>
 
@@ -92,7 +92,7 @@
 
             <div class="stat-card">
 
-                <h2>45</h2>
+                <h2 th:text="${totalOrders}"></h2>
 
                 <p>Total Orders</p>
 
@@ -100,7 +100,7 @@
 
             <div class="stat-card">
 
-                <h2>12</h2>
+                <h2 th:text="${totalUsers}"></h2>
 
                 <p>Users</p>
 
@@ -108,7 +108,7 @@
 
             <div class="stat-card">
 
-                <h2>35M</h2>
+                <h2 th:text="${revenue}"></h2>
 
                 <p>Revenue</p>
 
@@ -124,18 +124,14 @@
 
             <div class="action-grid">
 
-                <a href="/admin/products/create"
+                <a href="/admin/products"
                    class="action-card">
-
-                    + ADD PRODUCT
-
+                    MANAGE PRODUCTS
                 </a>
 
-                <a href="/admin/categories/create"
+                <a href="/admin/categories"
                    class="action-card">
-
-                    + ADD CATEGORY
-
+                    MANAGE CATEGORIES
                 </a>
 
                 <a href="/admin/orders"

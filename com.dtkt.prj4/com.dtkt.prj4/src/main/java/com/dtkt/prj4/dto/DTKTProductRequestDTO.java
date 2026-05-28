@@ -18,9 +18,12 @@ public class DTKTProductRequestDTO {
 
     private Long categoryId;
 
+    // IMAGE URL
     private String imageUrl;
 
-    // ===== GETTER SETTER =====
+    // =========================
+    // GETTER SETTER
+    // =========================
 
     public String getName() {
         return name;

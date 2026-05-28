@@ -19,6 +19,7 @@ public class DTKTCartController {
     public DTKTCartController(
             DTKTProductService productService
     ) {
+
         this.productService = productService;
     }
 
@@ -61,13 +62,15 @@ public class DTKTCartController {
             }
         }
 
-        // nếu chưa có thì thêm mới
+        // ADD NEW
         if (!found) {
 
             DTKTCartItemDTO item =
                     new DTKTCartItemDTO();
 
-            item.setProductId(product.getId());
+            item.setProductId(
+                    product.getId()
+            );
 
             item.setName(
                     product.getName()
@@ -80,6 +83,21 @@ public class DTKTCartController {
             item.setQuantity(1);
 
             item.setSize(size);
+
+            item.setColor(
+                    product.getColor()
+            );
+
+            // IMAGE
+            if (product.getImages() != null
+                    && !product.getImages().isEmpty()) {
+
+                item.setImageUrl(
+                        product.getImages()
+                                .get(0)
+                                .getImageUrl()
+                );
+            }
 
             cart.add(item);
         }
@@ -125,9 +143,10 @@ public class DTKTCartController {
     // =========================
     // INCREASE
     // =========================
-    @GetMapping("/cart/increase/{id}")
+    @GetMapping("/cart/increase/{id}/{size}")
     public String increaseCart(
             @PathVariable Long id,
+            @PathVariable String size,
             HttpSession session
     ) {
 
@@ -139,7 +158,8 @@ public class DTKTCartController {
 
             for (DTKTCartItemDTO item : cart) {
 
-                if (item.getProductId().equals(id)) {
+                if (item.getProductId().equals(id)
+                        && item.getSize().equals(size)) {
 
                     item.setQuantity(
                             item.getQuantity() + 1
@@ -158,9 +178,10 @@ public class DTKTCartController {
     // =========================
     // DECREASE
     // =========================
-    @GetMapping("/cart/decrease/{id}")
+    @GetMapping("/cart/decrease/{id}/{size}")
     public String decreaseCart(
             @PathVariable Long id,
+            @PathVariable String size,
             HttpSession session
     ) {
 
@@ -174,7 +195,8 @@ public class DTKTCartController {
 
             for (DTKTCartItemDTO item : cart) {
 
-                if (item.getProductId().equals(id)) {
+                if (item.getProductId().equals(id)
+                        && item.getSize().equals(size)) {
 
                     if (item.getQuantity() > 1) {
 
@@ -205,9 +227,10 @@ public class DTKTCartController {
     // =========================
     // REMOVE
     // =========================
-    @GetMapping("/cart/remove/{id}")
+    @GetMapping("/cart/remove/{id}/{size}")
     public String removeCart(
             @PathVariable Long id,
+            @PathVariable String size,
             HttpSession session
     ) {
 
@@ -218,7 +241,10 @@ public class DTKTCartController {
         if (cart != null) {
 
             cart.removeIf(item ->
-                    item.getProductId().equals(id));
+
+                    item.getProductId().equals(id)
+                            && item.getSize().equals(size)
+            );
         }
 
         session.setAttribute("cart", cart);
@@ -229,9 +255,10 @@ public class DTKTCartController {
     // =========================
     // CHANGE SIZE
     // =========================
-    @PostMapping("/cart/change-size/{id}")
+    @PostMapping("/cart/change-size/{id}/{oldSize}")
     public String changeSize(
             @PathVariable Long id,
+            @PathVariable String oldSize,
             @RequestParam String size,
             HttpSession session
     ) {
@@ -244,7 +271,8 @@ public class DTKTCartController {
 
             for (DTKTCartItemDTO item : cart) {
 
-                if (item.getProductId().equals(id)) {
+                if (item.getProductId().equals(id)
+                        && item.getSize().equals(oldSize)) {
 
                     item.setSize(size);
 

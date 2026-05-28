@@ -12,6 +12,10 @@ public class DTKTCartItemDTO {
 
     private String size;
 
+    private String color;
+
+    private String imageUrl;
+
     // =========================
     // GETTER SETTER
     // =========================
@@ -54,5 +58,21 @@ public class DTKTCartItemDTO {
 
     public void setSize(String size) {
         this.size = size;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

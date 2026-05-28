@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Checkout</title>
+
+    <link rel="stylesheet"
+          href="/css/user/style.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+
+    <div class="menu-left">
+
+        <a href="/">HOME</a>
+
+        <a href="#">Bộ Sưu Tập</a>
+
+    </div>
+
+    <div class="logo">
+        DTKT
+    </div>
+
+    <div class="menu-right">
+
+        <a href="/cart">
+            Giỏ Hàng
+        </a>
+
+    </div>
+
+</header>
+
+
+<!-- CHECKOUT -->
+<section class="checkout-page">
+
+    <h1>CHECKOUT</h1>
+
+    <div class="checkout-layout">
+
+        <!-- FORM -->
+        <div class="checkout-form-box">
+
+            <form th:action="@{/checkout}"
+                  method="post"
+                  th:object="${checkoutRequest}"
+
+                  class="checkout-form">
+
+                <!-- ADDRESS -->
+                <input type="text"
+                       th:field="*{shippingAddress}"
+                       placeholder="Địa chỉ giao hàng"
+                       required>
+
+                <!-- NOTE -->
+                <textarea th:field="*{note}"
+                          placeholder="Ghi chú">
+                </textarea>
+
+                <!-- PAYMENT -->
+                <select th:field="*{paymentMethod}">
+
+                    <option value="COD">
+                        Thanh toán khi nhận hàng
+                    </option>
+
+                    <option value="BANK_TRANSFER">
+                        Chuyển khoản ngân hàng
+                    </option>
+
+                </select>
+
+                <!-- BUTTON -->
+                <button type="submit">
+
+                    ĐẶT HÀNG
+
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <!-- ORDER SUMMARY -->
+        <div class="checkout-summary">
+
+            <h2>ĐƠN HÀNG</h2>
+
+            <div class="summary-item"
+                 th:each="item : ${cart}">
+
+                <div class="summary-left">
+
+                    <img th:src="${item.imageUrl}"
+                         alt="">
+
+                    <div>
+
+                        <p th:text="${item.name}">
+                        </p>
+
+                        <small>
+
+                            Size:
+                            <span th:text="${item.size}">
+                            </span>
+
+                        </small>
+
+                    </div>
+
+                </div>
+
+                <div class="summary-right">
+
+                    <span th:text="${item.quantity}">
+                    </span>
+                    x
+
+                    <span th:text="${item.price}">
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- TOTAL -->
+            <div class="checkout-total">
+
+                TOTAL:
+
+                <span th:text="${total}">
+                </span> VNĐ
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

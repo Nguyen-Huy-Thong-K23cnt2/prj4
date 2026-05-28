@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Manage Categories</title>
+
+    <link rel="stylesheet"
+          href="/css/admin/admin.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="admin-logo">
+            DTKT ADMIN
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="/admin">
+                Dashboard
+            </a>
+
+            <a href="/admin/products">
+                Products
+            </a>
+
+            <a href="/admin/categories">
+                Categories
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="admin-main">
+
+        <!-- TOPBAR -->
+        <div class="admin-topbar">
+
+            <h1>CATEGORY MANAGEMENT</h1>
+
+        </div>
+
+
+        <!-- FORM -->
+        <section class="admin-form-section">
+
+            <h2 th:text="${editMode ? 'EDIT CATEGORY' : 'ADD CATEGORY'}">
+            </h2>
+
+            <form th:action="${editMode ? '/admin/categories/update/' + editCategoryId : '/admin/categories/create'}"
+                  method="post"
+                  th:object="${category}"
+                  class="admin-form">
+
+                <!-- NAME -->
+                <input type="text"
+                       th:field="*{name}"
+                       placeholder="Category Name"
+                       required>
+
+                <!-- BUTTON -->
+                <button type="submit">
+
+                    <span th:text="${editMode ? 'UPDATE CATEGORY' : 'ADD CATEGORY'}">
+                    </span>
+
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- TABLE -->
+        <section class="table-section">
+
+            <table class="admin-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Name</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                <tr th:each="category : ${categories}">
+
+                    <!-- ID -->
+                    <td th:text="${category.id}">
+                    </td>
+
+                    <!-- NAME -->
+                    <td th:text="${category.name}">
+                    </td>
+
+                    <!-- ACTION -->
+                    <td class="action-column">
+
+                        <a class="edit-btn"
+                           th:href="@{/admin/categories/edit/{id}(id=${category.id})}">
+
+                            Sửa
+
+                        </a>
+
+                        <a class="delete-btn"
+                           th:href="@{/admin/categories/delete/{id}(id=${category.id})}">
+
+                            Xóa
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

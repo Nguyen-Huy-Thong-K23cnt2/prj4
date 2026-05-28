@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Wishlist</title>
+
+    <link rel="stylesheet"
+          href="/css/user/style.css">
+
+</head>
+
+<body>
+
+<section class="wishlist-page">
+
+    <h1>WISHLIST</h1>
+
+    <div class="wishlist-grid">
+
+        <div class="wishlist-card"
+             th:each="item : ${wishlists}">
+
+            <!-- IMAGE -->
+            <img th:if="${item.product.images != null
+                 and !item.product.images.isEmpty()}"
+
+                 th:src="${item.product.images[0].imageUrl}"
+
+                 alt="">
+
+            <!-- NAME -->
+            <h3 th:text="${item.product.name}">
+            </h3>
+
+            <!-- PRICE -->
+            <p>
+
+                <span th:text="${item.product.price}">
+                </span>
+
+                VNĐ
+
+            </p>
+
+            <!-- ACTION -->
+            <div class="wishlist-action">
+
+                <a th:href="@{/product/{id}(id=${item.product.id})}">
+
+                    VIEW
+
+                </a>
+
+                <a class="remove-btn"
+
+                   th:href="@{/wishlist/remove/{id}
+                   (id=${item.product.id})}">
+
+                    REMOVE
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

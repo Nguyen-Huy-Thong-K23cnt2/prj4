@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Manage Products</title>
+
+    <link rel="stylesheet"
+          href="/css/admin/admin.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="admin-logo">
+            DTKT ADMIN
+        </div>
+
+        <nav class="sidebar-menu">
+
+            <a href="/admin">
+                Dashboard
+            </a>
+
+            <a href="/admin/products">
+                Products
+            </a>
+
+            <a href="/logout">
+                Logout
+            </a>
+
+        </nav>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="admin-main">
+
+        <!-- TOPBAR -->
+        <div class="admin-topbar">
+
+            <h1>PRODUCT MANAGEMENT</h1>
+
+        </div>
+
+
+        <!-- PRODUCT FORM -->
+        <section class="admin-form-section">
+
+            <h2 th:text="${editMode ? 'EDIT PRODUCT' : 'ADD PRODUCT'}">
+            </h2>
+
+            <form th:action="${editMode ? '/admin/products/update/' + editProductId : '/admin/products/create'}"
+                  method="post"
+                  th:object="${productRequest}"
+                  class="admin-form">
+
+                <!-- NAME -->
+                <input type="text"
+                       th:field="*{name}"
+                       placeholder="Product Name"
+                       required>
+
+                <!-- PRICE -->
+                <input type="number"
+                       th:field="*{price}"
+                       placeholder="Price"
+                       required>
+
+                <!-- DISCOUNT -->
+                <input type="number"
+                       th:field="*{discount}"
+                       placeholder="Discount">
+
+                <!-- QUANTITY -->
+                <input type="number"
+                       th:field="*{quantity}"
+                       placeholder="Quantity">
+
+                <!-- SIZE -->
+                <input type="text"
+                       th:field="*{size}"
+                       placeholder="Size">
+
+                <!-- COLOR -->
+                <input type="text"
+                       th:field="*{color}"
+                       placeholder="Color">
+
+                <!-- IMAGE URL -->
+                <input type="text"
+                       th:field="*{imageUrl}"
+                       placeholder="Image URL">
+
+                <!-- DESCRIPTION -->
+                <textarea th:field="*{description}"
+                          placeholder="Description">
+                </textarea>
+
+                <!-- CATEGORY -->
+                <select th:field="*{categoryId}">
+
+                    <option value="">
+                        Select Category
+                    </option>
+
+                    <option th:each="category : ${categories}"
+                            th:value="${category.id}"
+                            th:text="${category.name}">
+                    </option>
+
+                </select>
+
+                <!-- BUTTON -->
+                <button type="submit">
+
+                    <span th:text="${editMode ? 'UPDATE PRODUCT' : 'ADD PRODUCT'}">
+                    </span>
+
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- PRODUCT TABLE -->
+        <section class="table-section">
+
+            <table class="admin-table">
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Image</th>
+
+                    <th>Name</th>
+
+                    <th>Price</th>
+
+                    <th>Quantity</th>
+
+                    <th>Size</th>
+
+                    <th>Category</th>
+
+                    <th>Action</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <tr th:each="product : ${products}">
+
+                    <!-- ID -->
+                    <td th:text="${product.id}">
+                    </td>
+
+                    <!-- IMAGE -->
+                    <td>
+
+                        <img class="admin-product-image"
+                             th:if="${product.images != null and !product.images.isEmpty()}"
+                             th:src="${product.images[0].imageUrl}"
+                             alt="">
+
+                    </td>
+
+                    <!-- NAME -->
+                    <td th:text="${product.name}">
+                    </td>
+
+                    <!-- PRICE -->
+                    <td th:text="${product.price}">
+                    </td>
+
+                    <!-- QUANTITY -->
+                    <td th:text="${product.quantity}">
+                    </td>
+
+                    <!-- SIZE -->
+                    <td th:text="${product.size}">
+                    </td>
+
+                    <!-- CATEGORY -->
+                    <td th:text="${product.category.name}">
+                    </td>
+
+                    <!-- ACTION -->
+                    <td class="action-column">
+
+                        <!-- EDIT -->
+                        <a class="edit-btn"
+                           th:href="@{/admin/products/edit/{id}(id=${product.id})}">
+
+                            Sửa
+
+                        </a>
+
+                        <!-- DELETE -->
+                        <a class="delete-btn"
+                           th:href="@{/admin/products/delete/{id}(id=${product.id})}">
+
+                            Xóa
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                </tbody>
+            </table>
+        </section>
+    </main>
+</div>
+</body>
+</html>

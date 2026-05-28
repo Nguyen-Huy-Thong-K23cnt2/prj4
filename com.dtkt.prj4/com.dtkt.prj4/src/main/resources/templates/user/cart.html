@@ -85,11 +85,18 @@
 
                 <div class="cart-product">
 
-                    <img src="https://picsum.photos/300/400"
+                    <img th:src="${item.imageUrl}"
                          alt="">
 
-                    <span th:text="${item.name}">
-                    </span>
+                    <div class="cart-info">
+
+                        <span th:text="${item.name}">
+                        </span>
+
+                        <small th:text="${item.color}">
+                        </small>
+
+                    </div>
 
                 </div>
 
@@ -99,7 +106,10 @@
             <!-- SIZE -->
             <td>
 
-                <form th:action="@{/cart/change-size/{id}(id=${item.productId})}"
+                <form th:action="@{/cart/change-size/{id}/{oldSize}
+                (id=${item.productId},
+                oldSize=${item.size})}"
+
                       method="post">
 
                     <select name="size"
@@ -146,15 +156,26 @@
 
                 <div class="quantity-box">
 
-                    <a th:href="@{/cart/decrease/{id}(id=${item.productId})}">
+                    <!-- DECREASE -->
+                    <a th:href="@{/cart/decrease/{id}/{size}
+                    (id=${item.productId},
+                    size=${item.size})}">
+
                         -
+
                     </a>
 
+                    <!-- QUANTITY -->
                     <span th:text="${item.quantity}">
                     </span>
 
-                    <a th:href="@{/cart/increase/{id}(id=${item.productId})}">
+                    <!-- INCREASE -->
+                    <a th:href="@{/cart/increase/{id}/{size}
+                    (id=${item.productId},
+                    size=${item.size})}">
+
                         +
+
                     </a>
 
                 </div>
@@ -175,7 +196,10 @@
             <td>
 
                 <a class="remove-btn"
-                   th:href="@{/cart/remove/{id}(id=${item.productId})}">
+
+                   th:href="@{/cart/remove/{id}/{size}
+                   (id=${item.productId},
+                   size=${item.size})}">
 
                     REMOVE
 
@@ -210,11 +234,11 @@
     </div>
 
 
-    <!-- CHECKOUT BUTTON -->
+    <!-- CHECKOUT -->
     <div class="checkout-box"
          th:if="${!#lists.isEmpty(cart)}">
 
-        <a href="#"
+        <a href="/checkout"
            class="checkout-btn">
 
             THANH TOÁN

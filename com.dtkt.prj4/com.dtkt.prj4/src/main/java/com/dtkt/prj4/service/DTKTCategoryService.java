@@ -14,23 +14,73 @@ public class DTKTCategoryService {
     public DTKTCategoryService(
             DTKTCategoryRepository categoryRepository
     ) {
+
         this.categoryRepository = categoryRepository;
     }
 
+    // =========================
     // GET ALL
+    // =========================
     public List<Category> getAllCategories() {
+
         return categoryRepository.findAll();
     }
 
+    // =========================
     // GET BY ID
-    public Category getCategoryById(Long id) {
+    // =========================
+    public Category getCategoryById(
+            Long id
+    ) {
+
         return categoryRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Category not found"));
+                        new RuntimeException(
+                                "Category not found"
+                        ));
     }
 
+    // =========================
     // CREATE
-    public Category createCategory(Category category) {
+    // =========================
+    public Category createCategory(
+            Category category
+    ) {
+
         return categoryRepository.save(category);
+    }
+
+    // =========================
+    // UPDATE
+    // =========================
+    public Category updateCategory(
+            Long id,
+            Category request
+    ) {
+
+        Category category =
+                categoryRepository.findById(id)
+                        .orElseThrow(() ->
+                                new RuntimeException(
+                                        "Category not found"
+                                ));
+
+        category.setName(
+                request.getName()
+        );
+
+        return categoryRepository.save(category);
+    }
+
+    // =========================
+    // DELETE
+    // =========================
+    public String deleteCategory(
+            Long id
+    ) {
+
+        categoryRepository.deleteById(id);
+
+        return "Delete success";
     }
 }
