@@ -3,188 +3,120 @@
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
-
     <title>Manage Orders</title>
-
     <link rel="stylesheet"
           href="/css/admin/admin.css">
-
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;700&display=swap"
           rel="stylesheet">
-
 </head>
-
 <body>
-
 <div class="admin-layout">
-
     <!-- SIDEBAR -->
     <aside class="sidebar">
-
         <div class="admin-logo">
             DTKT ADMIN
         </div>
-
         <nav class="sidebar-menu">
-
             <a href="/admin">
                 Dashboard
             </a>
-
             <a href="/admin/products">
                 Products
             </a>
-
             <a href="/admin/categories">
                 Categories
             </a>
-
             <a href="/admin/orders">
                 Orders
             </a>
-
             <a href="/logout">
                 Logout
             </a>
-
         </nav>
-
     </aside>
-
-
     <!-- MAIN -->
     <main class="admin-main">
-
         <!-- TOPBAR -->
         <div class="admin-topbar">
-
             <h1>ORDER MANAGEMENT</h1>
-
         </div>
-
-
         <!-- TABLE -->
         <section class="table-section">
-
             <table class="admin-table">
-
                 <thead>
-
                 <tr>
-
                     <th>ID</th>
-
                     <th>Customer</th>
-
                     <th>Total</th>
-
                     <th>Status</th>
-
                     <th>Address</th>
-
                     <th>Created</th>
-
                     <th>Action</th>
-
                 </tr>
-
                 </thead>
-
-
                 <tbody>
-
                 <tr th:each="order : ${orders}">
-
                     <!-- ID -->
-                    <td th:text="${order.id}">
+                    <td>
+                        <a th:href="@{/admin/orders/{id}
+                        (id=${order.id})}"
+                           th:text="${order.id}">
+                        </a>
                     </td>
-
                     <!-- USER -->
                     <td th:text="${order.user.username}">
                     </td>
-
                     <!-- TOTAL -->
                     <td>
-
                         <span th:text="${order.finalPrice}">
                         </span> VNĐ
-
                     </td>
-
                     <!-- STATUS -->
                     <td th:text="${order.status}">
                     </td>
-
                     <!-- ADDRESS -->
                     <td th:text="${order.shippingAddress}">
                     </td>
-
                     <!-- CREATED -->
                     <td th:text="${order.createdAt}">
                     </td>
-
                     <!-- ACTION -->
                     <td class="action-column">
-
                         <!-- CONFIRM -->
                         <a class="edit-btn"
-
                            th:href="@{/admin/orders/status/{id}
                            (id=${order.id},
                            value='CONFIRMED')}">
-
                             Confirm
-
                         </a>
-
                         <!-- SHIPPING -->
                         <a class="edit-btn"
-
                            th:href="@{/admin/orders/status/{id}
                            (id=${order.id},
                            value='SHIPPING')}">
-
                             Shipping
-
                         </a>
-
                         <!-- DELIVERED -->
                         <a class="edit-btn"
-
                            th:href="@{/admin/orders/status/{id}
                            (id=${order.id},
                            value='DELIVERED')}">
-
                             Delivered
-
                         </a>
-
                         <!-- CANCEL -->
                         <a class="delete-btn"
-
                            th:href="@{/admin/orders/status/{id}
                            (id=${order.id},
                            value='CANCELLED')}">
-
                             Cancel
-
                         </a>
-
                     </td>
-
                 </tr>
-
                 </tbody>
-
             </table>
-
         </section>
-
     </main>
-
 </div>
-
 </body>
 </html>

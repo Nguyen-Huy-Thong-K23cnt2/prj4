@@ -1,9 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="vi"
       xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
+    ```
     <meta charset="UTF-8">
 
     <title th:text="${product.name}">
@@ -15,6 +17,7 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Montserrat:wght@300;400;500;700&display=swap"
           rel="stylesheet">
+    ```
 
 </head>
 
@@ -22,6 +25,7 @@
 
 <header class="header">
 
+    ```
     <div class="menu-left">
 
         <a href="/">HOME</a>
@@ -36,7 +40,7 @@
 
     <div class="menu-right">
 
-        <a href="/user/login">
+        <a href="/login">
             Đăng Nhập
         </a>
 
@@ -45,18 +49,20 @@
         </a>
 
     </div>
+    ```
 
 </header>
 
-
 <section class="product-detail">
 
+    ```
     <div class="product-image">
+
         <img th:if="${product.images != null and !product.images.isEmpty()}"
              th:src="${product.images[0].imageUrl}"
              alt="">
-    </div>
 
+    </div>
 
     <div class="product-info">
 
@@ -66,8 +72,10 @@
 
         <div class="price">
 
-            <span th:text="${product.price}">
-            </span> VNĐ
+        <span th:text="${product.price}">
+        </span>
+
+            VNĐ
 
         </div>
 
@@ -78,27 +86,31 @@
         <div class="product-meta">
 
             <p>
+
                 Size:
                 <span th:text="${product.size}">
-                </span>
+            </span>
+
             </p>
 
             <p>
+
                 Color:
                 <span th:text="${product.color}">
-                </span>
+            </span>
+
             </p>
 
             <p>
+
                 Quantity:
                 <span th:text="${product.quantity}">
-                </span>
+            </span>
+
             </p>
 
         </div>
 
-
-        <!-- SIZE SELECT -->
         <div class="size-wrapper">
 
             <h3>CHỌN SIZE</h3>
@@ -129,8 +141,6 @@
 
         </div>
 
-
-        <!-- ADD CART -->
         <form th:action="@{/cart/add/{id}(id=${product.id})}"
               method="post">
 
@@ -156,9 +166,83 @@
         </form>
 
     </div>
+    ```
 
 </section>
 
+<section class="review-section">
+
+    ```
+    <h2>ĐÁNH GIÁ SẢN PHẨM</h2>
+
+    <form th:action="@{/product/comment/{id}(id=${product.id})}"
+          method="post">
+
+        <select name="star">
+
+            <option value="5">
+                ★★★★★
+            </option>
+
+            <option value="4">
+                ★★★★☆
+            </option>
+
+            <option value="3">
+                ★★★☆☆
+            </option>
+
+            <option value="2">
+                ★★☆☆☆
+            </option>
+
+            <option value="1">
+                ★☆☆☆☆
+            </option>
+
+        </select>
+
+        <textarea name="content"
+                  placeholder="Nhận xét của bạn..."
+                  required>
+    </textarea>
+
+        <button type="submit">
+
+            GỬI ĐÁNH GIÁ
+
+        </button>
+
+    </form>
+
+    <div class="review-list">
+
+        <div class="review-item"
+             th:each="comment : ${comments}">
+
+            <h4 th:text="${comment.user.username}">
+            </h4>
+
+            <p>
+
+                ⭐
+                <span th:text="${comment.star}">
+            </span>/5
+
+            </p>
+
+            <p th:text="${comment.content}">
+            </p>
+
+            <small th:text="${comment.createdAt}">
+            </small>
+
+        </div>
+
+    </div>
+    ```
+
+</section>
 
 <script>
 

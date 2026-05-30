@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Order Detail</title>
+    <link rel="stylesheet"
+          href="/css/user/style.css">
+</head>
+<body>
+<section class="orders-page">
+    <h1>
+        ORDER #
+        <span th:text="${order.id}">
+        </span>
+    </h1>
+    <div class="order-info">
+        <p>
+            Status:
+            <strong th:text="${order.status}">
+            </strong>
+        </p>
+        <p>
+            Address:
+            <span th:text="${order.shippingAddress}">
+            </span>
+        </p>
+        <p>
+            Total:
+            <span th:text="${order.finalPrice}">
+            </span>
+            VNĐ
+        </p>
+    </div>
+    <table class="cart-table">
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Size</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="detail : ${order.orderDetails}">
+            <td th:text="${detail.product.name}">
+            </td>
+            <td th:text="${detail.size}">
+            </td>
+            <td th:text="${detail.quantity}">
+            </td>
+            <td th:text="${detail.price}">
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>

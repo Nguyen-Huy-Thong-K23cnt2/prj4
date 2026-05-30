@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Order Detail</title>
+    <link rel="stylesheet"
+          href="/css/admin/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+    <aside class="sidebar">
+        <div class="admin-logo">
+            DTKT ADMIN
+        </div>
+        <nav class="sidebar-menu">
+            <a href="/admin">
+                Dashboard
+            </a>
+            <a href="/admin/orders">
+                Orders
+            </a>
+        </nav>
+    </aside>
+    <main class="admin-main">
+        <div class="admin-topbar">
+            <h1>
+                ORDER #
+                <span th:text="${order.id}">
+                </span>
+            </h1>
+        </div>
+        <div class="admin-form-section">
+            <p>
+                Customer:
+                <strong
+                        th:text="${order.user.username}">
+                </strong>
+            </p>
+            <p>
+                Status:
+                <strong
+                        th:text="${order.status}">
+                </strong>
+            </p>
+            <p>
+                Address:
+                <strong
+                        th:text="${order.shippingAddress}">
+                </strong>
+            </p>
+            <p>
+                Total:
+                <strong
+                        th:text="${order.finalPrice}">
+                </strong>
+                VNĐ
+            </p>
+        </div>
+        <section class="table-section">
+            <table class="admin-table">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Size</th>
+                    <th>Color</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="detail : ${order.orderDetails}">
+                    <td th:text="${detail.product.name}">
+                    </td>
+                    <td th:text="${detail.size}">
+                    </td>
+                    <td th:text="${detail.color}">
+                    </td>
+                    <td th:text="${detail.quantity}">
+                    </td>
+                    <td th:text="${detail.price}">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</div>
+</body>
+</html>

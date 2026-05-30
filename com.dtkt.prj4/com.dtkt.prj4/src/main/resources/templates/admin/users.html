@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+    <link rel="stylesheet"
+          href="/css/admin/admin.css">
+</head>
+<body>
+<div class="admin-layout">
+    <aside class="sidebar">
+        <div class="admin-logo">
+            DTKT ADMIN
+        </div>
+        <nav class="sidebar-menu">
+            <a href="/admin">
+                Dashboard
+            </a>
+            <a href="/admin/products">
+                Products
+            </a>
+            <a href="/admin/categories">
+                Categories
+            </a>
+            <a href="/admin/orders">
+                Orders
+            </a>
+            <a href="/admin/users">
+                Users
+            </a>
+            <a href="/logout">
+                Logout
+            </a>
+        </nav>
+    </aside>
+    <main class="admin-main">
+        <div class="admin-topbar">
+            <h1>USER MANAGEMENT</h1>
+        </div>
+        <section class="table-section">
+            <table class="admin-table">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.id}">
+                    </td>
+                    <td th:text="${user.username}">
+                    </td>
+                    <td th:text="${user.email}">
+                    </td>
+                    <td th:text="${user.role.name}">
+                    </td>
+                    <td>
+                    <span th:if="${user.isActive}">
+                        Active
+                    </span>
+                        <span th:unless="${user.isActive}">
+                        Locked
+                    </span>
+                    </td>
+                    <td class="action-column">
+                        <a class="edit-btn"
+                           th:href="@{/admin/users/toggle/{id}
+                       (id=${user.id})}">
+                            Toggle
+                        </a>
+                        <a class="edit-btn"
+                           th:href="@{/admin/users/role/{id}
+                       (id=${user.id})}">
+                            Change Role
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</div>
+</body>
+</html>

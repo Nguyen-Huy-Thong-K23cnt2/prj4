@@ -16,22 +16,16 @@ public class DTKTAuthController {
     public DTKTAuthController(
             DTKTAuthService authService
     ) {
-
         this.authService = authService;
     }
-
-    // =========================
     // LOGIN PAGE
-    // =========================
     @GetMapping("/login")
     public String loginPage() {
 
         return "user/login";
     }
 
-    // =========================
     // REGISTER PAGE
-    // =========================
     @GetMapping("/register")
     public String registerPage(
             Model model
@@ -45,30 +39,23 @@ public class DTKTAuthController {
         return "user/register";
     }
 
-    // =========================
     // REGISTER
-    // =========================
     @PostMapping("/register")
     public String register(
             @ModelAttribute
             DTKTRegisterRequestDTO request,
             Model model
     ) {
-
         String result =
                 authService.register(request);
-
         model.addAttribute(
                 "message",
                 result
         );
-
         return "redirect:/login";
     }
 
-    // =========================
     // LOGIN
-    // =========================
     @PostMapping("/login")
     public String login(
             @RequestParam String username,

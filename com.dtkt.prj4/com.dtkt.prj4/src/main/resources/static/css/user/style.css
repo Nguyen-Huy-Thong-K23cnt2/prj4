@@ -914,14 +914,45 @@ body{
 
 .wishlist-action{
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
 }
 
 .wishlist-action a{
     color:#fff;
-
     text-decoration:none;
+}
+
+.review-section{
+width:90%;
+margin:80px auto;
+}
+
+.review-section h2{
+margin-bottom:30px;
+
+}
+.review-section form{
+display:flex;
+flex-direction:column;
+gap:15px;
+margin-bottom:40px;
+}
+
+.review-section select,
+.review-section textarea{
+padding:12px;
+border:1px solid #ddd;
+}
+
+.review-section button{
+width:220px;
+padding:14px;
+border:none;
+cursor:pointer;
+}
+
+.review-item{
+border-bottom:1px solid #ddd;
+padding:20px 0;
 }

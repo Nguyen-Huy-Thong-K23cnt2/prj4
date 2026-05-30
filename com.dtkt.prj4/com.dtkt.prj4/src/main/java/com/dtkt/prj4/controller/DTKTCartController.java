@@ -107,9 +107,7 @@ public class DTKTCartController {
         return "redirect:/cart";
     }
 
-    // =========================
     // VIEW CART
-    // =========================
     @GetMapping("/cart")
     public String viewCart(
             HttpSession session,
@@ -119,142 +117,99 @@ public class DTKTCartController {
         List<DTKTCartItemDTO> cart =
                 (List<DTKTCartItemDTO>)
                         session.getAttribute("cart");
-
         if (cart == null) {
-
             cart = new ArrayList<>();
         }
-
         double total = 0;
-
         for (DTKTCartItemDTO item : cart) {
-
             total += item.getPrice()
                     * item.getQuantity();
         }
-
         model.addAttribute("cart", cart);
-
         model.addAttribute("total", total);
-
         return "user/cart";
     }
 
-    // =========================
     // INCREASE
-    // =========================
     @GetMapping("/cart/increase/{id}/{size}")
     public String increaseCart(
             @PathVariable Long id,
             @PathVariable String size,
             HttpSession session
     ) {
-
         List<DTKTCartItemDTO> cart =
                 (List<DTKTCartItemDTO>)
                         session.getAttribute("cart");
-
         if (cart != null) {
-
             for (DTKTCartItemDTO item : cart) {
-
                 if (item.getProductId().equals(id)
                         && item.getSize().equals(size)) {
-
                     item.setQuantity(
                             item.getQuantity() + 1
                     );
-
                     break;
                 }
             }
         }
-
         session.setAttribute("cart", cart);
-
         return "redirect:/cart";
     }
 
-    // =========================
+
     // DECREASE
-    // =========================
     @GetMapping("/cart/decrease/{id}/{size}")
     public String decreaseCart(
             @PathVariable Long id,
             @PathVariable String size,
             HttpSession session
     ) {
-
         List<DTKTCartItemDTO> cart =
                 (List<DTKTCartItemDTO>)
                         session.getAttribute("cart");
-
         if (cart != null) {
-
             DTKTCartItemDTO removeItem = null;
-
             for (DTKTCartItemDTO item : cart) {
-
                 if (item.getProductId().equals(id)
                         && item.getSize().equals(size)) {
-
                     if (item.getQuantity() > 1) {
-
                         item.setQuantity(
                                 item.getQuantity() - 1
                         );
-
                     } else {
-
                         removeItem = item;
                     }
-
                     break;
                 }
             }
-
             if (removeItem != null) {
-
                 cart.remove(removeItem);
             }
         }
-
         session.setAttribute("cart", cart);
-
         return "redirect:/cart";
     }
 
-    // =========================
     // REMOVE
-    // =========================
     @GetMapping("/cart/remove/{id}/{size}")
     public String removeCart(
             @PathVariable Long id,
             @PathVariable String size,
             HttpSession session
     ) {
-
         List<DTKTCartItemDTO> cart =
                 (List<DTKTCartItemDTO>)
                         session.getAttribute("cart");
-
         if (cart != null) {
-
             cart.removeIf(item ->
-
                     item.getProductId().equals(id)
                             && item.getSize().equals(size)
             );
         }
-
         session.setAttribute("cart", cart);
-
         return "redirect:/cart";
     }
 
-    // =========================
     // CHANGE SIZE
-    // =========================
     @PostMapping("/cart/change-size/{id}/{oldSize}")
     public String changeSize(
             @PathVariable Long id,
@@ -262,20 +217,14 @@ public class DTKTCartController {
             @RequestParam String size,
             HttpSession session
     ) {
-
         List<DTKTCartItemDTO> cart =
                 (List<DTKTCartItemDTO>)
                         session.getAttribute("cart");
-
         if (cart != null) {
-
             for (DTKTCartItemDTO item : cart) {
-
                 if (item.getProductId().equals(id)
                         && item.getSize().equals(oldSize)) {
-
                     item.setSize(size);
-
                     break;
                 }
             }

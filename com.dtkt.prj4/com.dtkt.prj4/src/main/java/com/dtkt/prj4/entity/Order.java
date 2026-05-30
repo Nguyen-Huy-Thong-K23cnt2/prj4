@@ -1,7 +1,5 @@
 package com.dtkt.prj4.entity;
-
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -13,16 +11,12 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // =========================
     // USER
-    // =========================
     @ManyToOne
     @JoinColumn(name = "user_id")
     private Users user;
 
-    // =========================
     // TOTAL
-    // =========================
     @Column(name = "total_price")
     private Double totalPrice;
 
@@ -32,35 +26,23 @@ public class Order {
     @Column(name = "final_price")
     private Double finalPrice;
 
-    // =========================
     // STATUS
-    // =========================
     private String status;
 
-    // =========================
     // SHIPPING
-    // =========================
     @Column(name = "shipping_address")
     private String shippingAddress;
-
     private String note;
 
-    // =========================
     // CREATED
-    // =========================
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    // =========================
     // ORDER DETAIL
-    // =========================
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;
 
-    // =========================
     // GETTER SETTER
-    // =========================
-
     public Long getId() {
         return id;
     }

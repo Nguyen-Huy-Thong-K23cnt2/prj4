@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile</title>
+    <link rel="stylesheet"
+          href="/css/user/style.css">
+</head>
+<body>
+<section class="profile-page">
+    <h1>MY PROFILE</h1>
+    <form method="post"
+          th:action="@{/profile}"
+          th:object="${user}">
+        <input type="text"
+               th:field="*{fullName}"
+               placeholder="Full Name">
+        <input type="text"
+               th:field="*{phone}"
+               placeholder="Phone">
+        <input type="text"
+               th:field="*{address}"
+               placeholder="Address">
+        <input type="text"
+               th:field="*{avatar}"
+               placeholder="Avatar URL">
+        <button type="submit">
+            UPDATE
+        </button>
+    </form>
+</section>
+</body>
+</html>
